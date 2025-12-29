@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ca">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.8.0/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="style_crashClock.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/round-slider@1.6.1/dist/roundslider.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/round-slider@1.6.1/dist/roundslider.min.js"></script>
+
+    <!-- ✅ IMPORTANT: la teva carpeta és clashclock_script -->
+    <script src="clashclock_script/animators.js"></script>
+    <script src="clashclock_script/class_0boundary.js"></script>
+    <script src="clashclock_script/class_0hand.js"></script>
+    <script src="clashclock_script/class_0particle.js"></script>
+    <script src="clashclock_script/class_0partPac.js"></script>
+    <script src="clashclock_script/class_1all.js"></script>
+    <script src="clashclock_script/class_2line.js"></script>
+    <script src="clashclock_script/class_3letter.js"></script>
+
+    <script src="sketch_crashClock.js"></script>
+    <script src="clashclock_script/update.js"></script>
+
+    <title>Clock</title>
+  </head>
+
+  <body>
+    <div id="widget">
+      <div id="generatorInput">
+        <div class="titleh2">
+          <div class="logoWrap">
+            <img src="resources/logo.svg" alt="Logo" width="100" height="100" />
+          </div>
+        </div>
+
+        <div class="coupling1">
+          <button type="button" class="resetPos" onclick="resetPos()">Reinicia el temps</button>
+        </div>
+
+        <button type="button" class="collapsible"><h1>TIPOGRAFIA</h1></button>
+        <div class="content">
+          <div class="coupling1">
+            <div class="coupling_label"><h3>Mida</h3></div>
+            <input type="range" min="1" max="100" value="50" id="textScaler" onchange="setTextScaler(this.value)">
+          </div>
+
+          <div class="coupling_label3"><h3>Visualització</h3></div>
+          <div class="coupling3">
+            <div class="coupling3sub">
+              <div class="couplingEntry">
+                <input type="radio" id="setHours" name="setSet" value="0" onclick="setSet(this.value)">
+                <label for="setHours">Hores</label>
+              </div>
+              <div class="couplingEntry">
+                <input type="radio" id="setHoursMin" name="setSet" value="1" onclick="setSet(this.value)">
+                <label for="setHoursMin">Hores i minuts</label>
+              </div>
+            </div>
+
+            <div class="coupling3sub">
+              <div class="couplingEntry">
+                <input type="radio" id="setText" name="setSet" value="2" onclick="setSet(this.value)" checked>
+                <label for="setText">Text</label>
+              </div>
+              <div class="couplingEntry">
+                <input type="radio" id="setParticle" name="setSet" value="3" onclick="setSet(this.value)">
+                <label for="setParticle">Partícules</label>
+              </div>
+            </div>
+          </div>
+
+          <div id="topBotText" style="display:block;">
+            <div class="coupling4">
+              <div class="coupling_label"><h4>Dalt</h4></div>
+              <input type="text" value="&ALBA" id="textTop" oninput="setTextTop(this.value)">
+            </div>
+
+            <div class="coupling4">
+              <div class="coupling_label"><h4>Baix</h4></div>
+              <input type="text" value="AICARD16" id="textBot" oninput="setTextBottom(this.value)">
+            </div>
+          </div>
+        </div>
+
+        <button type="button" class="collapsible"><h1>RELLOTGE</h1></button>
+        <div class="content">
+          <div class="coupling1">
+            <div class="coupling_label"><h3>Escala</h3></div>
+            <input type="range" min="1" max="100" value="50" id="textScaler" onchange="setFullScale(this.value)">
+          </div>
+
+          <div class="coupling0">
+            <select name="styleChange" id="styleChange" onchange="setStyle(this.value)">
+              <option id="style0" value="0" selected>Cap</option>
+              <option id="style1" value="1">Vora</option>
+              <option id="style2" value="2">Silhueta</option>
+            </select>
+          </div>
+
+          <div class="coupling1">
+            <div class="coupling_label"><h3>Text</h3></div>
+            <input type="color" id="fillColor" name="fillColor" value="#EDEDED" oninput="setFillColor(this.value)">
+          </div>
+
+          <div class="coupling1">
+            <div class="coupling_label"><h3>Fons</h3></div>
+            <input type="color" id="bkgdColor" name="bkgdColor" value="#000000" oninput="setBkgdColor(this.value)">
+          </div>
+
+          <div class="coupling1">
+            <div class="coupling_label"><h3>Agulles</h3></div>
+            <input type="color" id="handColor" name="handColor" value="#FFFFFF" oninput="setHandColor(this.value)">
+          </div>
+
+          <div class="coupling1">
+            <div class="coupling_label"><h3>Accent</h3></div>
+            <input type="color" id="accentColor" name="accentColor" value="#FF0000" oninput="setAccentColor(this.value)">
+          </div>
+        </div>
+
+        <button type="button" class="collapsible"><h1>FÍSICA</h1></button>
+        <div class="content">
+          <div class="coupling1">
+            <div class="coupling_label"><h3>Angle<br>gravetat</h3></div>
+            <div id="handle2"></div>
+          </div>
+
+          <div class="coupling1">
+            <div class="coupling_label"><h3>Intensitat</h3></div>
+            <input type="range" min="0" max="100" value="50" id="gravityStrength" oninput="setGravityStrength(this.value)">
+          </div>
+
+          <div class="coupling1">
+            <div class="coupling_label"><h3>Límit</h3></div>
+            <input type="range" min="0" max="100" value="0" id="padFactor" oninput="setPadFactor(this.value)">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <label class="switch">
+        <input type="checkbox" checked oninput="hideWidget()">
+        <span class="slider round"></span>
+      </label>
+    </div>
+
+    <script>
+      var coll = document.getElementsByClassName("collapsible");
+      for (var i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+          this.classList.toggle("active");
+          var content = this.nextElementSibling;
+          content.style.display = (content.style.display === "block") ? "none" : "block";
+        });
+      }
+    </script>
+  </body>
+</html>

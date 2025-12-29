@@ -26,11 +26,11 @@ let hourHand, minHand, secHand;
 let hourAngle, minAngle, secAngle;
 let mConstraint;
 
-/* ✅ Defaults de color */
-var bkgdColor = '#000000';     // fons negre
-var fillColor = '#EDEDED';     // text rgb(237,237,237)
-var handColor = '#FFFFFF';     // agulles blanques
-var accentColor = '#FF0000';   // accent vermell
+/* ✅ Defaults de color (CANVIATS) */
+var bkgdColor = '#F7F7F7';     // fons rgb(247,247,247)
+var fillColor = '#080808';     // text rgb(8,8,8)
+var handColor = '#080808';     // agulles rgb(8,8,8)
+var accentColor = '#b3b3b3ff';   // accent rgb(255,136,71)
 
 var textScaler = 1;
 var pg = [];
